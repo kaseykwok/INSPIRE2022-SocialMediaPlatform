@@ -6,10 +6,25 @@
     </div> -->
     <b-navbar type="dark" variant="dark" id="nav">
       <b-navbar-brand>GirlsOnly</b-navbar-brand>
+      <b-navbar-nav class="ms-auto">
+        <b-nav-item @click="logout" v-if="$store.state.loginUserID !== -1">Log out</b-nav-item>
+      </b-navbar-nav>
     </b-navbar>
     <router-view id="router-app"/>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      this.$store.commit('setLoginSession', -1)
+      this.$router.push('/login')
+    }
+  }
+}
+</script>
+
 
 <style>
 #app {

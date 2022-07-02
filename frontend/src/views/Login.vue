@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page">
+  <div>
     <h3>Welcome to GirlsOnly! Please sign in or register for an account.</h3>
     <b-form @submit.prevent="loginSubmit">
       <b-input-group class="my-5" style="height:30px">
@@ -11,6 +11,9 @@
           required
           placeholder="Username"
           v-model="username"
+          autocomplete="off"
+          @input="submitted = false"
+          autofocus
         ></b-form-input>
       </b-input-group>
       <b-input-group class="my-5" style="height:30px">
@@ -22,18 +25,26 @@
           required
           placeholder="Password"
           v-model="password"
+          @input="submitted = false"
         >
         </b-form-input>
       </b-input-group>
-      <b-button type="submit" variant="primary">Sign in</b-button>
-      <b-button variant="secondary" class="mx-3">Register</b-button>
+      <b-form-invalid-feedback :state="!submitted || userExist" v-if="submitted && !userExist">
+        User record not found. Please check your input carefully.
+      </b-form-invalid-feedback>
+      <b-form-invalid-feedback :state="!submitted || passwordCorrect" v-else>
+        Wrong password.
+      </b-form-invalid-feedback>
+      <div class="my-5">
+        <b-button type="submit" variant="primary">Sign in</b-button>
+        <b-button variant="secondary" class="mx-3" @click="onRegister">Register</b-button>
+      </div>
     </b-form>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+import UsersDataService from "../services/UsersDataService"
 
 export default {
   name: 'Login',
@@ -43,14 +54,40 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      userExist: false,
+      passwordCorrect: false,
+      submitted: false
     }
   },
   methods: {
-    loginSubmit(e) {
+    async loginSubmit(e) {
       console.log(this.username)
-      console.log(this.password)
+      await UsersDataService.getUserByUsername(this.username).then(response => {
+        if(this.password === response.data.password) {
+          this.$store.commit('setLoginSession', response.data.id)
+          console.log("Login successful")
+          this.userExist = true;
+          this.passwordCorrect = true;
+          this.$router.push({ path: '/' })
+        }
+        else {
+          console.log("Wrong password")
+          this.userExist = true;
+          this.passwordCorrect = false;
+        }
+      }).catch(e => {
+        console.log("Error", e.response.data)
+        this.userExist = false;
+        this.passwordCorrect = false;
+      })
+
+      this.submitted = true
     },
-  }
+
+    onRegister() {
+      this.$router.push({ path: '/register'})
+    }
+  },
 }
 </script>
