@@ -7,7 +7,6 @@
       >
         <b-form-input
           type="text"
-          required
           v-model="username"
           autocomplete="off"
           @input="submitted = false; checkUsername()"
@@ -25,7 +24,6 @@
       >
         <b-form-input
           type="password"
-          required
           v-model="password"
           @input="submitted = false"
           style="height:30px"
@@ -38,7 +36,6 @@
       >
         <b-form-input
           type="password"
-          required
           v-model="repeatPassword"
           @input="submitted = false"
           style="height:30px"
@@ -82,6 +79,16 @@ export default {
   methods: {
     async registerSubmit(e) {
       console.log(this.dob)
+
+      await UsersDataService.create({
+        username: this.username,
+        password: this.password,
+        dob: this.dob
+      }).then(response => {
+        console.log("User created")
+      }).catch(e => {
+        console.log(e)
+      })
     },
 
     async checkUsername() {
@@ -91,10 +98,6 @@ export default {
         this.usernameIsUnique = true;
       })
     },
-
-    onDateContext(ctx) {
-      // console.log(ctx.selectedYMD)
-    }
   },
 }
 </script>

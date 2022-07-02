@@ -3,7 +3,29 @@ const Users = db.users;
 const Op = db.Sequelize.Op;
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
+    if (!req.body.username || !req.body.password || !req.body.dob) {
+      res.status(400).send();
+      return;
+    }
   
+    // Create a Tutorial
+    const user = {
+      username: req.body.username,
+      password: req.body.password,
+      dob: req.body.dob
+    };
+  
+    // Save Tutorial in the database
+    Users.create(user)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while registering the use."
+        });
+      });
 };
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
