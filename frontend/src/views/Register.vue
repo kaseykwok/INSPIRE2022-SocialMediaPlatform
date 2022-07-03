@@ -34,7 +34,7 @@
             <span class="required-label">*</span>
           </template>
           <validation-provider v-slot="validationContext"
-            :rules="{ required: true }"
+            :rules="{ required: true, regex: /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}/ }"
             name="Password"
           >
             <b-form-input
@@ -44,6 +44,7 @@
               :state="getValidationState(validationContext)"
             >
             </b-form-input>
+            <b-form-text>Your password must be at least 8 characters long, includes at least 1 number, 1 uppercase, 1 lowercase letter and 1 special character (#?!@$%^&*-).</b-form-text>
             <b-form-invalid-feedback>
                 {{validationContext.errors[0]}}
             </b-form-invalid-feedback>
@@ -77,9 +78,26 @@
             Date of Birth
             <span class="required-label">*</span>
           </template>
-          <date-picker v-model="dob" style="height:30px; width: 100%"
-            valueType="format"
-          ></date-picker>
+          <validation-provider v-slot="validationContext"
+            :rules="{ required: true }"
+            name="Date of Birth"
+          >
+            <date-picker v-model="dob" style="height:30px; width: 100%"
+              valueType="format" :disabled-date="afterToday"
+            ></date-picker>
+            <b-form-invalid-feedback :state="getValidationState(validationContext)">
+                {{validationContext.errors[0]}}
+            </b-form-invalid-feedback>
+          </validation-provider>
+        </b-form-group>
+
+        <b-form-group class="mt-4">
+          <template #label>
+            Occupation
+          </template>
+          <b-form-select v-model="occupation" :options="occupationOptions"
+            style="height:30px; width: 100%"
+          ></b-form-select>
         </b-form-group>
 
         <b-button type="submit" variant="primary" class="my-4">Register</b-button>
@@ -102,26 +120,33 @@ export default {
       password: '',
       repeatPassword: '',
       dob: null,
+      occupation: '',
       passwordValid: false,
       usernameIsUnique: true,
-      submitted: false,
-      earliestDate: new Date(0),
-      today: new Date()
+      occupationOptions: [
+        { value: null, text: '-' },
+        { value: 'Student', text: 'Student'},
+        { value: 'Entertainer', text: 'Entertainer' },
+        { value: 'Office Worker', text: 'Office Worker' },
+        { value: 'Freelancer', text: 'Freelancer' },
+        { value: 'Software Developer', text: 'Software Developer' },
+      ]
     }
   },
   methods: {
     async registerSubmit(e) {
-      console.log(this.dob)
-
-      // await UsersDataService.create({
-      //   username: this.username,
-      //   password: this.password,
-      //   dob: this.dob
-      // }).then(response => {
-      //   console.log("User created")
-      // }).catch(e => {
-      //   console.log(e)
-      // })
+      await UsersDataService.create({
+        username: this.username,
+        password: this.password,
+        dob: this.dob,
+        occupation: this.occupation
+      }).then(response => {
+        console.log("User created")
+        this.$store.commit('setLoginSession', response.data.id)
+        this.$router.push({ path: '/' })
+      }).catch(e => {
+        console.log(e)
+      })
     },
 
     getValidationState({ dirty, validated, valid = null }) {
@@ -135,11 +160,14 @@ export default {
         this.usernameIsUnique = true;
       })
     },
+    afterToday(date) {
+      return date > new Date(new Date().setHours(0, 0, 0, 0));
+    }
   },
   computed: {
     passwordCorrect() {
       return this.password == this.repeatPassword && this.password != ''
-    }
+    },
   }
 }
 </script>

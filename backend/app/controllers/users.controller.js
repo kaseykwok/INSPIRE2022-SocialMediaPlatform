@@ -12,7 +12,8 @@ exports.create = (req, res) => {
     const user = {
       username: req.body.username,
       password: req.body.password,
-      dob: req.body.dob
+      dob: req.body.dob,
+      occupation: req.body.occupation
     };
   
     // Save Tutorial in the database
