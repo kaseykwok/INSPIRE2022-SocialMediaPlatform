@@ -91,10 +91,8 @@ export default {
 
   },
   created() {
-    console.log("debug", this.$store.state.loginUserID)
     if(this.$store.state.loginUserID !== -1){
       this.$router.push({ path: '/' })
-      console.log("debug")
     }
   }
 }
