@@ -168,6 +168,11 @@ export default {
     passwordCorrect() {
       return this.password == this.repeatPassword && this.password != ''
     },
+  },
+  created() {
+    if(this.$store.state.loginUserID !== -1){
+      this.$router.push({ path: '/' })
+    }
   }
 }
 </script>

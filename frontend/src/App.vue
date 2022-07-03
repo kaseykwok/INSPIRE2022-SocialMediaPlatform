@@ -5,7 +5,7 @@
       <router-link to="/about">About</router-link>
     </div> -->
     <b-navbar type="dark" variant="dark" id="nav">
-      <b-navbar-brand>GirlsOnly</b-navbar-brand>
+      <b-navbar-brand href="/">GirlsOnly</b-navbar-brand>
       <b-navbar-nav class="ms-auto">
         <b-nav-item @click="logout" v-if="$store.state.loginUserID !== -1">Log out</b-nav-item>
       </b-navbar-nav>

@@ -13,6 +13,11 @@ export default {
   name: 'Home',
   components: {
     HelloWorld
+  },
+  created() {
+    if(this.$store.state.loginUserID === -1){
+      this.$router.push({ path: '/login' })
+    }
   }
 }
 </script>
