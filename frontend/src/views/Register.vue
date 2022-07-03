@@ -1,57 +1,90 @@
 <template>
   <div>
     <h3>Register to GirlsOnly now!</h3>
-    <b-form @submit.prevent="registerSubmit">
-      <b-form-group class="my-4"
-        label="Username"
-      >
-        <b-form-input
-          type="text"
-          v-model="username"
-          autocomplete="off"
-          @input="submitted = false; checkUsername()"
-          :state="usernameIsUnique"
-          autofocus
-          style="height:30px"
-        ></b-form-input>
-        <b-form-invalid-feedback :state="usernameIsUnique">
-          Username has been registered. Please try another one.
-        </b-form-invalid-feedback>
-      </b-form-group>
+    <validation-observer v-slot="{ handleSubmit }">
+      <b-form @submit.prevent="handleSubmit(registerSubmit)">
 
-      <b-form-group class="my-4"
-        label="Password"
-      >
-        <b-form-input
-          type="password"
-          v-model="password"
-          @input="submitted = false"
-          style="height:30px"
-        >
-        </b-form-input>
-      </b-form-group>
+        <b-form-group class="mt-4">
+          <template #label>
+            Username
+            <span class="required-label">*</span>
+          </template>
+          <validation-provider v-slot="validationContext"
+            :rules="{ required: true, uniqueUsername: [usernameIsUnique] }"
+            name="Username"
+          >
+            <b-form-input
+              type="text"
+              v-model="username"
+              autocomplete="off"
+              @input="checkUsername()"
+              :state="getValidationState(validationContext)"
+              autofocus
+              style="height:30px"
+            ></b-form-input>
+            <b-form-invalid-feedback>
+              {{validationContext.errors[0]}}
+            </b-form-invalid-feedback>
+          </validation-provider>
+        </b-form-group>
 
-      <b-form-group class="my-4" 
-        label="Confirm Password"
-      >
-        <b-form-input
-          type="password"
-          v-model="repeatPassword"
-          @input="submitted = false"
-          style="height:30px"
-        >
-        </b-form-input>
-      </b-form-group>
+        <b-form-group class="mt-4">
+          <template #label>
+            Password
+            <span class="required-label">*</span>
+          </template>
+          <validation-provider v-slot="validationContext"
+            :rules="{ required: true }"
+            name="Password"
+          >
+            <b-form-input
+              type="password"
+              v-model="password"
+              style="height:30px"
+              :state="getValidationState(validationContext)"
+            >
+            </b-form-input>
+            <b-form-invalid-feedback>
+                {{validationContext.errors[0]}}
+            </b-form-invalid-feedback>
+          </validation-provider>
+        </b-form-group>
 
-      <b-form-group class="my-4" 
-        label="Date of Birth">
-        <date-picker v-model="dob" style="height:30px; width: 100%"
-          valueType="format"
-        ></date-picker>
-      </b-form-group>
+        <b-form-group class="mt-4">
+          <template #label>
+            Confirm Password
+            <span class="required-label">*</span>
+          </template>
+          <validation-provider v-slot="validationContext"
+            :rules="{ required: true, equalTo: [password] }"
+            name="Confirm Password"
+          >
+            <b-form-input
+              type="password"
+              v-model="repeatPassword"
+              style="height:30px"
+              :state="getValidationState(validationContext)"
+            >
+            </b-form-input>
+            <b-form-invalid-feedback>
+                {{validationContext.errors[0]}}
+            </b-form-invalid-feedback>
+          </validation-provider>
+        </b-form-group>
 
-      <b-button type="submit" variant="primary" class="my-4">Register</b-button>
-    </b-form>
+        <b-form-group class="mt-4">
+          <template #label>
+            Date of Birth
+            <span class="required-label">*</span>
+          </template>
+          <date-picker v-model="dob" style="height:30px; width: 100%"
+            valueType="format"
+          ></date-picker>
+        </b-form-group>
+
+        <b-button type="submit" variant="primary" class="my-4">Register</b-button>
+      </b-form>
+    </validation-observer>
   </div>
 </template>
 
@@ -69,7 +102,7 @@ export default {
       password: '',
       repeatPassword: '',
       dob: null,
-      passwordCorrect: false,
+      passwordValid: false,
       usernameIsUnique: true,
       submitted: false,
       earliestDate: new Date(0),
@@ -80,15 +113,19 @@ export default {
     async registerSubmit(e) {
       console.log(this.dob)
 
-      await UsersDataService.create({
-        username: this.username,
-        password: this.password,
-        dob: this.dob
-      }).then(response => {
-        console.log("User created")
-      }).catch(e => {
-        console.log(e)
-      })
+      // await UsersDataService.create({
+      //   username: this.username,
+      //   password: this.password,
+      //   dob: this.dob
+      // }).then(response => {
+      //   console.log("User created")
+      // }).catch(e => {
+      //   console.log(e)
+      // })
+    },
+
+    getValidationState({ dirty, validated, valid = null }) {
+      return dirty || validated ? valid : null;
     },
 
     async checkUsername() {
@@ -99,11 +136,20 @@ export default {
       })
     },
   },
+  computed: {
+    passwordCorrect() {
+      return this.password == this.repeatPassword && this.password != ''
+    }
+  }
 }
 </script>
 
 <style scoped>
 label {
   display: none
+}
+
+.required-label {
+  color: red
 }
 </style>
