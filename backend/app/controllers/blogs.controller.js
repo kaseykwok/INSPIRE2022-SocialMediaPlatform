@@ -1,21 +1,19 @@
 const db = require("../models");
-const Users = db.users;
+const Blogs = db.blogs;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.username || !req.body.password || !req.body.dob) {
+    if (!req.body.description || !req.body.userId) {
       res.status(400).send();
       return;
     }
   
-    const user = {
-      username: req.body.username,
-      password: req.body.password,
-      dob: req.body.dob,
-      occupation: req.body.occupation
+    const blog = {
+      description: req.body.description,
+      userId: req.body.userId
     };
   
-    Users.create(user)
+    Blogs.create(blog)
       .then(data => {
         res.send(data);
       })
@@ -27,19 +25,31 @@ exports.create = (req, res) => {
       });
 };
 
-exports.findAll = (req, res) => {
-  
+exports.getAllBlogsByUserId = (req, res) => {
+  const userId = req.params.userId
+
+  Blogs.findAll({ where:{
+    userId: userId
+  }}).then( data => {
+      if (data) {
+          res.send(data);
+      } else {
+          res.status(404).send();
+      }
+  }).catch( err => {
+    res.status(500).send();
+  })
 };
 
-exports.getUserById = (req, res) => {
+exports.getBlogById = (req, res) => {
     const id = req.params.id
 
-    Users.findByPk(id).then(data => {
+    Blogs.findByPk(id).then(data => {
         if (data) {
             res.send(data);
         } else {
             res.status(404).send({
-                message: 'No user found'
+                message: 'No blog found'
             });
         }
     })
@@ -50,23 +60,24 @@ exports.getUserById = (req, res) => {
     })
 };
 
-exports.getUserByUsername = (req, res) => {
-    Users.findOne({ where: { 
-        username: req.params.username,
-    }})
-    .then(data => {
-        if(data) {
-            res.send(data)
-        } else {
-            res.status(404).send()
-        }
-    })
-    .catch(err => {
-        res.status(500).send()
-        console.log('back', err)
-    })
-}
+// exports.getUserByUsername = (req, res) => {
+//     Users.findOne({ where: { 
+//         username: req.params.username,
+//     }})
+//     .then(data => {
+//         if(data) {
+//             res.send(data)
+//         } else {
+//             res.status(404).send()
+//         }
+//     })
+//     .catch(err => {
+//         res.status(500).send()
+//         console.log('back', err)
+//     })
+// }
 
+// Update a Tutorial by the id in the request
 exports.update = (req, res) => {
   
 };
