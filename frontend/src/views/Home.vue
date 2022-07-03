@@ -24,14 +24,14 @@ export default {
     }
   },
   beforeCreate() {
-    this.blogs = BlogsDataService.getAllBlogsByUserId(this.$store.state.loginUserID).then(response => {
+    this.blogs = BlogsDataService.getAllBlogsByUserId(this.$store.state.loginSession.userID).then(response => {
       this.blogs = response.data
     }).catch( error => {
       console.log("Error", error.response.data)
     })
   },
   created() {
-    if(this.$store.state.loginUserID === -1){
+    if(this.$store.state.loginSession.userID === -1){
       this.$router.push({ path: '/login' })
     }
   }

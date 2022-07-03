@@ -3,9 +3,9 @@
         <b-card-group>
             <b-card class="p-2">
                 <span style="float: right; color: #898989">{{blogData.createdAt}}</span>
-                <b-card-title @click="onClickProfile"> 
-                    <Avatar :username="blogData.user.name" style="display: inline-block" class="me-2"></Avatar>
-                    {{blogData.user.name}} @{{ blogData.user.username }} 
+                <b-card-title> 
+                    <Avatar :username="userData.name" style="display: inline-block" class="me-3"></Avatar>
+                    <span class="username" @click="onClickProfile">{{userData.name}} @{{ userData.username }} </span>
                 </b-card-title>
                 <b-card-text class="mt-4" style="white-space: pre-wrap">{{ blogData.description }}</b-card-text>
         
@@ -21,9 +21,14 @@ export default {
     props: {
         blogData: Object,
     },
+    computed: {
+        userData() {
+            return this.blogData.user
+        }
+    },
     methods: {
         onClickProfile() {
-            console.log(this.blogData.user.name)
+            this.$router.push({ path: '/profile/' + this.userData.username })
         }
     }
 };
@@ -31,5 +36,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.username:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
 </style>

@@ -65,7 +65,11 @@ export default {
       console.log(this.username)
       await UsersDataService.getUserByUsername(this.username).then(response => {
         if(this.password === response.data.password) {
-          this.$store.commit('setLoginSession', response.data.id)
+          this.$store.commit('setLoginSession', { 
+            id: response.data.id, 
+            name: response.data.name,
+            username: response.data.username
+          })
           console.log("Login successful")
           this.userExist = true;
           this.passwordCorrect = true;
@@ -91,7 +95,7 @@ export default {
 
   },
   created() {
-    if(this.$store.state.loginUserID !== -1){
+    if(this.$store.state.loginSession.userID !== -1){
       this.$router.push({ path: '/' })
     }
   }

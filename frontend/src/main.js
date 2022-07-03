@@ -28,11 +28,19 @@ Vue.component('Avatar', Avatar);
 
 const store = new Vuex.Store({
   state: {
-    loginUserID: -1
+    loginSession: {
+      userID: -1,
+      name: '',
+      username: '',
+    }
   },
   plugins: [createPersistedState()],
   mutations: {
-    setLoginSession: (state, id) => state.loginUserID = id,
+    setLoginSession: (state, {id, name, username}) => {
+      state.loginSession.userID = id;
+      state.loginSession.name = name;
+      state.loginSession.username = username;
+    }
   }
 })
 

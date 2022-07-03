@@ -166,7 +166,11 @@ export default {
         occupation: this.occupation
       }).then(response => {
         console.log("User created")
-        this.$store.commit('setLoginSession', response.data.id)
+        this.$store.commit('setLoginSession', { 
+          id: response.data.id, 
+          name: response.data.name,
+          username: response.data.username
+        })
         this.$router.push({ path: '/' })
       }).catch(e => {
         console.log(e)
@@ -194,7 +198,7 @@ export default {
     },
   },
   created() {
-    if(this.$store.state.loginUserID !== -1){
+    if(this.$store.state.loginSession.userID !== -1){
       this.$router.push({ path: '/' })
     }
   }
