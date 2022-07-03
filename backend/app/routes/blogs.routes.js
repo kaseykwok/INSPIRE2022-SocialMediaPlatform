@@ -5,7 +5,9 @@ module.exports = app => {
   
     router.post("/", blogs.create);
   
-    router.get("/user/:userId", blogs.getAllBlogsByUserId);
+    router.get("/userid/:userId", blogs.getAllBlogsByUserId);
+    
+    router.get("/username/:username", blogs.getAllBlogsByUsername);
     
     router.get("/:id", blogs.getBlogById);
   

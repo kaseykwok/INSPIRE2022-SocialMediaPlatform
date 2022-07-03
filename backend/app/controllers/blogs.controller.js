@@ -35,7 +35,37 @@ exports.getAllBlogsByUserId = (req, res) => {
     order: [
       ['createdAt', 'DESC']
     ],
-    include: [ db.users ]
+    include: [{ 
+      model: db.users,
+      attributes: {
+        exclude: ['password']
+      },
+    }]
+  }).then( data => {
+      if (data) {
+          res.send(data);
+      } else {
+          res.status(404).send();
+      }
+  }).catch( err => {
+    res.status(500).send();
+  })
+};
+
+exports.getAllBlogsByUsername = (req, res) => {
+  const username = req.params.username
+
+  Blogs.findAll({ 
+    order: [
+      ['createdAt', 'DESC']
+    ],
+    include: [{ 
+      model: db.users,
+      attributes: {
+        exclude: ['password']
+      },
+      where: {username: username} 
+    }]
   }).then( data => {
       if (data) {
           res.send(data);
