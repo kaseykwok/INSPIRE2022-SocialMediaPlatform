@@ -23,6 +23,9 @@ import './validation-rules'
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
 
+import Avatar from 'vue-avatar';
+Vue.component('Avatar', Avatar);
+
 const store = new Vuex.Store({
   state: {
     loginUserID: -1

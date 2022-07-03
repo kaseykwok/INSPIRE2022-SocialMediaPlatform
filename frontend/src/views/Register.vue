@@ -6,6 +6,29 @@
 
         <b-form-group class="mt-4">
           <template #label>
+            Name
+            <span class="required-label">*</span>
+          </template>
+          <validation-provider v-slot="validationContext"
+            :rules="{ required: true }"
+            name="Name"
+          >
+            <b-form-input
+              type="text"
+              v-model="name"
+              autocomplete="off"
+              :state="getValidationState(validationContext)"
+              autofocus
+              style="height:30px"
+            ></b-form-input>
+            <b-form-invalid-feedback>
+              {{validationContext.errors[0]}}
+            </b-form-invalid-feedback>
+          </validation-provider>
+        </b-form-group>
+
+        <b-form-group class="mt-4">
+          <template #label>
             Username
             <span class="required-label">*</span>
           </template>
@@ -19,7 +42,6 @@
               autocomplete="off"
               @input="checkUsername()"
               :state="getValidationState(validationContext)"
-              autofocus
               style="height:30px"
             ></b-form-input>
             <b-form-invalid-feedback>
@@ -116,6 +138,7 @@ export default {
   },
   data() {
     return {
+      name: '',
       username: '',
       password: '',
       repeatPassword: '',
@@ -136,6 +159,7 @@ export default {
   methods: {
     async registerSubmit(e) {
       await UsersDataService.create({
+        name: this.name,
         username: this.username,
         password: this.password,
         dob: this.dob,

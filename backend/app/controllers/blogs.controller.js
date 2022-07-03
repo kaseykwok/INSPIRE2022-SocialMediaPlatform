@@ -28,9 +28,15 @@ exports.create = (req, res) => {
 exports.getAllBlogsByUserId = (req, res) => {
   const userId = req.params.userId
 
-  Blogs.findAll({ where:{
-    userId: userId
-  }}).then( data => {
+  Blogs.findAll({ 
+    where:{
+      userId: userId
+    },
+    order: [
+      ['createdAt', 'DESC']
+    ],
+    include: [ db.users ]
+  }).then( data => {
       if (data) {
           res.send(data);
       } else {

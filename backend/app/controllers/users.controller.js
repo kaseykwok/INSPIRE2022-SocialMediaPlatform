@@ -4,27 +4,28 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
     if (!req.body.username || !req.body.password || !req.body.dob) {
-      res.status(400).send();
-      return;
+        res.status(400).send();
+        return;
     }
   
     const user = {
-      username: req.body.username,
-      password: req.body.password,
-      dob: req.body.dob,
-      occupation: req.body.occupation
+        name: req.body.name,
+        username: req.body.username,
+        password: req.body.password,
+        dob: req.body.dob,
+        occupation: req.body.occupation
     };
   
     Users.create(user)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while registering the use."
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || "Some error occurred while registering the use."
+            });
         });
-      });
 };
 
 exports.findAll = (req, res) => {
