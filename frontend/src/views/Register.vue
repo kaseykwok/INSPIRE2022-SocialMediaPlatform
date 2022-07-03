@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 100px">
     <h3>Register to GirlsOnly now!</h3>
     <validation-observer v-slot="{ handleSubmit }">
       <b-form @submit.prevent="handleSubmit(registerSubmit)">

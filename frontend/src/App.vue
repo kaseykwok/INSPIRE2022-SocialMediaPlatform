@@ -49,7 +49,7 @@ export default {
 }
 
 #router-app {
-  padding: 100px;
+  padding: 60px;
 }
 
 </style>
