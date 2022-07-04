@@ -4,7 +4,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <b-navbar type="dark" variant="dark" id="nav">
+    <b-navbar type="dark" variant="dark" id="nav" :sticky="true">
       <b-navbar-brand href="/">GirlsOnly</b-navbar-brand>
       <b-navbar-nav class="ms-auto" v-if="$store.state.loginSession.userID !== -1">
         <span @click="onClickIcon" class="avatar">
@@ -46,6 +46,7 @@ export default {
 
 #nav {
   padding: 10px 20px 10px 20px;
+  float: top;
 }
 
 #router-app {

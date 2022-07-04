@@ -5,9 +5,7 @@
                 style="float: right" 
                 v-if="userData.username !== $store.state.loginSession.username"
                 variant="primary"
-            >
-                Follow
-            </b-button>
+            >Follow</b-button>
             <b-card-title>{{userData.name}}</b-card-title>
             <b-card-sub-title>@{{userData.username}}</b-card-sub-title>
             <b-card-text v-if="userData.occupation">
@@ -36,22 +34,32 @@ export default {
             userData: {},
         }
     },
-    beforeCreate() {
-        this.blogs = BlogsDataService.getAllBlogsByUsername(this.$route.params.username).then(response => {
-            this.blogs = response.data
-        }).catch( error => {
-            console.log("Error", error.response.data)
-        })
-
-        this.userData = UsersDataService.getUserByUsername(this.$route.params.username).then(response => {
-            this.userData = response.data
-        }).catch(e => {
-            console.log("Error", e.response.data)
-        })
+    methods:{
+        updateProfile() {
+            this.blogs = BlogsDataService.getAllBlogsByUsername(this.$route.params.username).then(response => {
+                this.blogs = response.data
+            }).catch( error => {
+                console.log("Error", error.response.data)
+            })
+    
+            this.userData = UsersDataService.getUserByUsername(this.$route.params.username).then(response => {
+                this.userData = response.data
+            }).catch(e => {
+                console.log("Error", e.response.data)
+            })
+        }
+    },
+    created() {
+        this.updateProfile()
+    },
+    computed: {
+        username: function() {
+            return this.$route.params.username
+        }
     },
     watch: {
-        '$route.params.username': function() {
-            this.beforeCreate()
+        username: function() {
+            this.updateProfile()
         }
     }
 }
