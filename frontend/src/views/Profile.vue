@@ -12,7 +12,7 @@
                 Occupation: {{userData.occupation}}
             </b-card-text>
         </b-card>
-
+        
         <Blog v-for="(blog, key) in blogs" :key="key" :blogData="blog"/>
     </div>
 </template>

@@ -3,7 +3,7 @@ const Blogs = db.blogs;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.description || !req.body.userId) {
+    if (req.body.description == '' || req.body.userId === -1) {
       res.status(400).send();
       return;
     }
