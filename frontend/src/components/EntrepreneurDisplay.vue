@@ -4,16 +4,22 @@
             <b-card class="p-2"
                 :img-src="entrepreneurData.imageURL"
             >
+            <b-card-body>
+                <b-button style="float: right">Support</b-button>
                 <b-card-title>{{ entrepreneurData.title }}</b-card-title>
                 <b-card-text>{{ entrepreneurData.description }}</b-card-text>
-                <!-- <span style="float: right; color: #898989">{{blogData.createdAt}}</span>
-                <b-card-title> 
-                    <Avatar :username="userData.name" style="display: inline-block" class="me-3"></Avatar>
-                    <span class="username" @click="onClickProfile">{{userData.name}} @{{ userData.username }} </span>
-                </b-card-title>
-                <b-card-text class="mt-4" style="white-space: pre-wrap">{{ blogData.description }}</b-card-text> -->
 
-        
+                <br>
+
+                <div class="row mb-2">
+                    <b-card-text>Crowdfunding progress: ${{currentAmount}} / ${{entrepreneurData.targetAmount}}</b-card-text>
+                </div>
+                <b-progress height="2rem" :value="currentAmount" :max="entrepreneurData.targetAmount" stripeed animated
+                ></b-progress>
+                <br>
+                <b-card-sub-title style="float: right">Proposed By {{userData.name}} (@{{ userData.username }}) </b-card-sub-title>
+            </b-card-body>
+
             </b-card>
         </b-card-group>
         
@@ -26,10 +32,15 @@ export default {
     props: {
         entrepreneurData: Object,
     },
+    data() {
+        return {
+            currentAmount: 20000,
+        }
+    },
     computed: {
-        // userData() {
-        //     return this.blogData.user
-        // }
+        userData() {
+            return this.entrepreneurData.user
+        }
     },
     methods: {
         // onClickProfile() {
