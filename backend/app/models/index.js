@@ -17,6 +17,7 @@ db.sequelize = sequelize;
 db.users = require("./users.model.js")(sequelize, Sequelize);
 db.blogs = require("./blogs.model.js")(sequelize, Sequelize);
 db.entrepreneurship = require("./entrepreneurship.model.js")(sequelize, Sequelize);
+db.userfollow = require('./userfollow.model')(sequelize, Sequelize);
 
 db.users.hasMany(db.blogs);
 db.blogs.belongsTo(db.users);

@@ -15,15 +15,10 @@ app.use(express.urlencoded({ extended: true }));
 const db = require("./app/models");
 db.sequelize.sync();
 
-// simple route
-// app.get("/", (req, res) => {
-//   res.json({ message: "Welcome to bezkoder application." });
-// });
-// set port, listen for requests
-
 require("./app/routes/users.routes")(app);
 require("./app/routes/blogs.routes")(app);
 require("./app/routes/entrepreneurship.routes")(app);
+require("./app/routes/userfollow.routes")(app)
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

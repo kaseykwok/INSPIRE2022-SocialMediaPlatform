@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Profile from '../views/Profile.vue'
+import Entrepreneurship from '../views/Entrepreneurship.vue'
 
 Vue.use(VueRouter)
 
@@ -11,7 +12,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     path: '/about',
@@ -35,6 +36,11 @@ const routes = [
     path: '/profile/:username',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/entrepreneurship',
+    name: 'Entrepreneurship',
+    component: Entrepreneurship
   }
 ]
 

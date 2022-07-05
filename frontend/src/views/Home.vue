@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     loadBlogs() {
-      this.blogs = BlogsDataService.getAllBlogsByUserId(this.$store.state.loginSession.userID).then(response => {
+      BlogsDataService.getAllBlogsByUserId(this.$store.state.loginSession.userID).then(response => {
         this.blogs = response.data
       }).catch( error => {
         console.log("Error", error.response.data)

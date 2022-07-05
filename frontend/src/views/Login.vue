@@ -1,6 +1,6 @@
 <template>
   <div style="padding: 100px">
-    <h3>Welcome to GirlsOnly! Please sign in or register for an account.</h3>
+    <h3>Welcome to #GirlsOnly! Please sign in or register for an account.</h3>
     <b-form @submit.prevent="loginSubmit">
       <b-input-group class="my-5" style="height:30px">
         <b-input-group-prepend is-text>
