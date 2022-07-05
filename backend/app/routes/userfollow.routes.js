@@ -5,6 +5,10 @@ module.exports = app => {
   
     // Follow
     router.post("/", userfollow.create);
+
+    router.get("/:userId/:followUserId", userfollow.getFollowState);
+
+    router.delete("/:userId/:followUserId", userfollow.unfollow);
   
     app.use("/api/userfollow", router);
   };

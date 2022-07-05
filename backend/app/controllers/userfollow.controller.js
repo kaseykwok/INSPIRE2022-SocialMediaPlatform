@@ -25,6 +25,40 @@ exports.create = (req, res) => {
       });
 };
 
+exports.getFollowState = (req, res) => {
+    UserFollow.findOne({
+        where: {
+            userId: req.params.userId,
+            followUserId: req.params.followUserId
+        }
+    }).then( data => {
+        if (data) {
+            res.send({ following: true });
+        } else {
+            res.send({ following: false });
+        }
+    }).catch( err => {
+        res.status(500).send();
+    })
+}
+
+exports.unfollow = (req, res) => {
+    UserFollow.destroy({
+        where: {
+            userId: req.params.userId,
+            followUserId: req.params.followUserId
+        },
+    })
+    .then(response => {
+        res.send({ message: `Unfollowed` });
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while unfollowing."
+        });
+    });
+}
 
 // exports.getAllBlogsByUserId = (req, res) => {
 //   const userId = req.params.userId
@@ -115,6 +149,4 @@ exports.create = (req, res) => {
 // }
 
 // Update a Tutorial by the id in the request
-exports.update = (req, res) => {
-  
-};
+
