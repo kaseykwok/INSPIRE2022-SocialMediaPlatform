@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Profile from '../views/Profile.vue'
 import Entrepreneurship from '../views/Entrepreneurship.vue'
+import SearchResult from '../views/SearchResult.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,12 @@ const routes = [
     path: '/entrepreneurship',
     name: 'Entrepreneurship',
     component: Entrepreneurship
+  },
+  {
+    path: '/searchResult',
+    name: 'SearchResult',
+    component: SearchResult,
+    props: route => ({ query: route.query.text })
   }
 ]
 

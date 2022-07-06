@@ -4,8 +4,8 @@ class UsersDataService {
     return http.get(`/users/${id}`);
   }
 
-  async getUserByUsername(username) {
-    return await http.get(`/users/username/${username}`)
+  getUserByUsername(username) {
+    return http.get(`/users/username/${username}`)
   }
 
   create(data) {

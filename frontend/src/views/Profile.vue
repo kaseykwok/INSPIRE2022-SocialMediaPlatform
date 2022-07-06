@@ -1,6 +1,7 @@
 <template>
     <div>
-        <b-card img-src="https://www.nationsonline.org/gallery/Hong-Kong/Hong-Kong-skyline-at-night.jpg" img-top class="mb-4">
+        <b-card img-src="https://www.nationsonline.org/gallery/Hong-Kong/Hong-Kong-skyline-at-night.jpg" 
+            img-top class="mb-4 mx-auto" style="max-width: 800px">
             <b-button 
                 style="float: right" 
                 v-if="userData.username !== $store.state.loginSession.username && isFollowing !== null"

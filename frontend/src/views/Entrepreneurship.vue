@@ -1,6 +1,6 @@
 <template>
     <div class="entrepreneurship">
-        <div class="mb-5">
+        <div class="mb-5 mx-auto" style="max-width: 800px">
             <h2>Entrepreneurship</h2>
             <p>Do you want to share your start up ideas to others? Do you want to give other women help for their innovative ideas? Do you want to support women's business? Here is the place you're looking for!</p>
         </div>

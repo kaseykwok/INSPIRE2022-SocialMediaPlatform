@@ -1,7 +1,7 @@
 <template>
     <div class="mb-4">
         <b-card-group>
-            <b-card class="p-2">
+            <b-card class="p-2 mx-auto" style="max-width: 800px">
                 <!-- <span style="float: right; color: #898989">{{blogData.createdAt}}</span> -->
                 <b-card-text> 
                     <b-form @submit.prevent="onPost"> 
