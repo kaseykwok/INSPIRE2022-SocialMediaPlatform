@@ -1,42 +1,45 @@
 <template>
-    <div class="entrepreneurship">
-        <div class="mb-5 mx-auto" style="max-width: 800px">
-            <h2>Entrepreneurship</h2>
-            <p>Do you want to share your start up ideas to others? Do you want to give other women help for their innovative ideas? Do you want to support women's business? Here is the place you're looking for!</p>
-        </div>
-        <EntrepreneurDisplay v-for="(entrepreneur, key) in entrepreneurs" :entrepreneurData="entrepreneur" :key="key"/>
+    <div>
+        <EntrepreneurDisplay :entrepreneurData="entrepreneur"/>
     </div>
 </template>
 
 <script>
 import EntrepreneurDisplay from '../components/EntrepreneurDisplay.vue'
-import EntrepreneurshipDataService from '../services/EntrepreneurshipDataService'
+import EntrepreneurshipDataService from '../services/EntrepreneurshipDataService.js'
 
 export default {
-    name: 'Entrepreneurship',
+    name: 'EntrepreneurshipList',
     components: {
         EntrepreneurDisplay
     },
     data() {
         return {
-           entrepreneurs: []
+            entrepreneur: {}
+        }
+    },
+    computed: {
+        entrepreneurId() {
+            return this.$route.params.id
         }
     },
     methods: {
-        loadEntrepreneurships() {
-          EntrepreneurshipDataService.getAll().then(response => {
-            this.entrepreneurs = response.data
-          }).catch( error => {
-            console.log("Error", error.response.data)
-        })
+        loadEntrepreneur() {
+            EntrepreneurshipDataService.getEntrepreneurById(this.entrepreneurId).then(response => {
+                this.entrepreneur = response.data
+                console.log(this.entrepreneur)
+             }).catch( error => {
+                console.log("Error in retrieving entrepreneurship", error.response.data)
+            })
+        }
+    },
+    watch: {
+        entrepreneurId() {
+            this.loadEntrepreneur()
         }
     },
     created() {
-        this.loadEntrepreneurships()
-
-        // if(this.$store.state.loginSession.userID === -1){
-        //   this.$router.push({ path: '/login' })
-        // }
+        this.loadEntrepreneur()
     }
 }
 </script>

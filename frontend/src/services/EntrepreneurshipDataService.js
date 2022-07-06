@@ -7,5 +7,13 @@ class EntrepreneurshipDataService {
   getAll() {
     return http.get(`/entrepreneurship`);
   }
+
+  getEntrepreneurById(id){
+    return http.get(`/entrepreneurship/get/${id}`)
+  }
+
+  searchEntrepreneurshipsByKeyword(keyword) {
+    return http.get(`/entrepreneurship/search/${keyword}`);
+  }
 }
 export default new EntrepreneurshipDataService();

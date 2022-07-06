@@ -5,7 +5,7 @@
                 :img-src="entrepreneurData.imageURL"
             >
             <b-card-body>
-                <b-button style="float: right">Support</b-button>
+                <b-button style="float: right" v-if="inListPage" @click="onSupport">Support</b-button>
                 <b-card-title>{{ entrepreneurData.title }}</b-card-title>
                 <b-card-text>{{ entrepreneurData.description }}</b-card-text>
 
@@ -17,7 +17,9 @@
                 <b-progress height="2rem" :value="currentAmount" :max="entrepreneurData.targetAmount" stripeed animated
                 ></b-progress>
                 <br>
-                <b-card-sub-title style="float: right">Proposed By {{userData.name}} (@{{ userData.username }}) </b-card-sub-title>
+                <b-card-sub-title style="float: right">Proposed By 
+                    <span class="username" @click="onClickProfile">{{userData.name}} (@{{ userData.username }}) </span>
+                </b-card-sub-title>
             </b-card-body>
 
             </b-card>
@@ -40,20 +42,27 @@ export default {
     computed: {
         userData() {
             return this.entrepreneurData.user
+        },
+
+        inListPage() {
+            return this.$route.path === '/entrepreneurshipList'
         }
     },
     methods: {
-        // onClickProfile() {
-        //     this.$router.push({ path: '/profile/' + this.userData.username })
-        // }
+        onClickProfile() {
+            this.$router.push({ path: '/profile/' + this.userData.username })
+        },
+
+        onSupport() {
+            this.$router.push({ path: '/entrepreneurship/' + this.entrepreneurData.id })
+        }
     }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-/* .username:hover{
+.username:hover{
     text-decoration: underline;
     cursor: pointer;
-} */
+}
 </style>

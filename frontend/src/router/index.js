@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Profile from '../views/Profile.vue'
 import Entrepreneurship from '../views/Entrepreneurship.vue'
+import EntrepreneurshipList from '../views/EntrepreneurshipList.vue'
 import SearchResult from '../views/SearchResult.vue'
 
 Vue.use(VueRouter)
@@ -39,9 +40,14 @@ const routes = [
     component: Profile
   },
   {
-    path: '/entrepreneurship',
+    path: '/entrepreneurship/:id',
     name: 'Entrepreneurship',
     component: Entrepreneurship
+  },
+  {
+    path: '/entrepreneurshipList',
+    name: 'EntrepreneurshipList',
+    component: EntrepreneurshipList
   },
   {
     path: '/searchResult',

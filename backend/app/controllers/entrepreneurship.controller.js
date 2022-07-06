@@ -1,3 +1,4 @@
+const { sequelize } = require("../models");
 const db = require("../models");
 const Entrepreneurship = db.entrepreneurship;
 const Op = db.Sequelize.Op;
@@ -29,20 +30,70 @@ exports.create = (req, res) => {
 };
 
 exports.getAllEntrepreneurship = (req, res) => {
-    Entrepreneurship.findAll({
-        include: [{
-            model: db.users,
-            attributes: ['id', 'name', 'username']
-        }]
-    }).then( data => {
-        if (data) {
-            res.send(data);
-        } else {
-            res.status(404).send();
-        }
-    }).catch( err => {
+  Entrepreneurship.findAll({
+    include: [{
+      model: db.users,
+      attributes: ['id', 'name', 'username']
+    }]
+  }).then( data => {
+    if (data) {
+      res.send(data);
+    } else {
+      res.status(404).send();
+    }
+  }).catch( err => {
     res.status(500).send();
-    })
+  })
+}
+
+exports.getEntrepreneurById = (req, res) => {
+  const id = req.params.id
+
+  Entrepreneurship.findOne({
+    where: {
+      id: id
+    },
+    include: [{
+      model: db.users,
+      attributes: ['id', 'name', 'username']
+    }]
+
+  }).then( data => {
+    if (data) {
+      res.send(data);
+    } else {
+      res.status(404).send();
+    }
+  }).catch( err => {
+    res.status(500).send();
+  })
+}
+
+exports.searchEntrepreneurshipsByKeyword = (req, res) => {
+  const keyword = req.params.keyword.toLowerCase()
+
+  Entrepreneurship.findAll({
+    where: {
+      [Op.or]: [
+        sequelize.where(sequelize.fn('LOWER', sequelize.col('title')), 'LIKE', '%' + keyword + '%'),
+        sequelize.where(sequelize.fn('LOWER', sequelize.col('description')), 'LIKE', '%' + keyword + '%')
+      ]
+    },
+    include: [{
+      model: db.users,
+      attributes: ['id', 'name', 'username'],
+    }]
+  }).then(data => {
+    if(data) {
+        res.send(data)
+    } else {
+        res.status(404).send()
+    }
+  })
+  .catch(err => {
+      res.status(500).send()
+      console.log('back', err)
+  })
 }
 
 // exports.getAllBlogsByUserId = (req, res) => {

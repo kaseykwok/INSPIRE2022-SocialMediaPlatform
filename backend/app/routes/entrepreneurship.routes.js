@@ -6,6 +6,10 @@ module.exports = app => {
     router.post("/", entrepreneurship.create);
   
     router.get("/", entrepreneurship.getAllEntrepreneurship);
+
+    router.get("/get/:id", entrepreneurship.getEntrepreneurById);
+
+    router.get("/search/:keyword", entrepreneurship.searchEntrepreneurshipsByKeyword)
   
     app.use("/api/entrepreneurship", router);
   };
