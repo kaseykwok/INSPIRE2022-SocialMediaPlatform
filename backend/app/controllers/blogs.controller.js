@@ -1,5 +1,7 @@
+const { userfollow } = require("../models");
 const db = require("../models");
 const Blogs = db.blogs;
+const UserFollow = db.userfollow;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -49,6 +51,48 @@ exports.getAllBlogsByUserId = (req, res) => {
       }
   }).catch( err => {
     res.status(500).send();
+  })
+};
+
+exports.getAllFeedBlogsByUserId = (req, res) => {
+  const userId = req.params.userId
+
+  UserFollow.findAll({
+    where: {
+      userId: userId,
+    },
+    attributes: ['followUserId']
+  }).then( data => {
+    var followings = []
+    if (data) {
+      followings = Object.values(data).map((e) => e.followUserId)
+    }
+
+    Blogs.findAll({ 
+      where:{
+        userId: [...followings, userId]
+      },
+      order: [
+        ['createdAt', 'DESC']
+      ],
+      include: [{ 
+        model: db.users,
+        attributes: {
+          exclude: ['password']
+        },
+      }]
+    }).then( data => {
+        if (data) {
+            res.send(data);
+        } else {
+            res.status(404).send({ message : "No feeds found" });
+        }
+      }).catch( err => {
+        res.status(500).send({ message : "Error in getting feeds"});
+      })
+
+  }).catch( err => {
+    res.status(500).send({ message : "Error in getting following list"});
   })
 };
 

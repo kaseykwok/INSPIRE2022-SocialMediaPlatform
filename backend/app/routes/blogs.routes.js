@@ -8,6 +8,8 @@ module.exports = app => {
     router.get("/userid/:userId", blogs.getAllBlogsByUserId);
     
     router.get("/username/:username", blogs.getAllBlogsByUsername);
+
+    router.get("/following/:userId", blogs.getAllFeedBlogsByUserId);
     
     router.get("/:id", blogs.getBlogById);
   

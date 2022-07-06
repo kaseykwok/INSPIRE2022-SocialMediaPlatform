@@ -8,6 +8,10 @@ class BlogsDataService {
     return http.get(`/blogs/username/${username}`);
   }
 
+  getAllFeedBlogsByUserId(id) {
+    return http.get(`/blogs/following/${id}`);
+  }
+
   create(data) {
     return http.post("/blogs", data);
   }

@@ -7,5 +7,9 @@ class UserFollowDataService {
     getFollowStatus(userId, followUserId) {
         return http.get(`/userFollow/${userId}/${followUserId}`);
     }
+
+    unfollow(userId, followUserId) {
+        return http.delete(`/userFollow/${userId}/${followUserId}`);
+    }
 }
 export default new UserFollowDataService();

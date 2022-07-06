@@ -63,16 +63,13 @@ export default {
 
         followOnClick() {
             if (this.isFollowing) {
-                UserFollowDataService.unfollow({
-                    userId: this.$store.state.loginSession.userID,
-                    followUserId: this.userData.id
-                }).then(response => {
+                UserFollowDataService.unfollow(this.$store.state.loginSession.userID, this.userData.id).then(response => {
                     console.log("Unfollowed")
                     this.isFollowing = false
                 }).catch(e => {
                     console.log(e)
                 })
-            } else {    
+            } else if (this.isFollowing === false){    
                 UserFollowDataService.follow({
                     userId: this.$store.state.loginSession.userID,
                     followUserId: this.userData.id
