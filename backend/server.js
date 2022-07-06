@@ -20,6 +20,7 @@ require("./app/routes/blogs.routes")(app);
 require("./app/routes/entrepreneurship.routes")(app);
 require("./app/routes/userfollow.routes")(app)
 require("./app/routes/userlike.routes")(app)
+require("./app/routes/usercommentblog.routes")(app)
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

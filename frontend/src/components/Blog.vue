@@ -9,7 +9,7 @@
                         <span class="username" @click="onClickProfile">{{userData.name}} @{{ userData.username }} </span>
                     </b-card-title>
                     <b-card-text class="mt-4" style="white-space: pre-wrap">{{ blogData.description }}</b-card-text>
-                    <div style="float:right">
+                    <div style="float:right" class="mb-2">
                         <b-button :variant="liked ? 'outline-primary' : 'outline-secondary'" 
                             @click="onLikeClick"
                             class="me-2 align-middle"
@@ -17,11 +17,16 @@
                             <b-icon :icon="liked ? 'hand-thumbs-up-fill' : 'hand-thumbs-up'"></b-icon>
                             {{ likeCount }}
                         </b-button> 
-                        <b-button variant="outline-secondary">
-                            <b-icon icon="chat-right" class="me-2"></b-icon>
+                        <b-button :variant="showComment ? 'outline-primary' : 'outline-secondary'" @click="toggleShowComment">
+                            <b-icon :icon="showComment ? 'chat-right-fill' : 'chat-right'" class="me-2"></b-icon>
                             Comment
                         </b-button>
                     </div>
+                </div>
+                <div>
+                    <b-form>
+                        <b-form-textarea v-if="showComment" max-rows="3" rows="3"></b-form-textarea>
+                    </b-form>
                 </div>
             </b-card>
         </b-card-group>
@@ -41,6 +46,7 @@ export default {
         return {
             liked: null,
             likeCount: 0,
+            showComment: false,
         }
     },
     computed: {
@@ -88,6 +94,10 @@ export default {
                     console.log("Error", e.response.data)
                 })
             }
+        },
+
+        toggleShowComment(){
+            this.showComment = !this.showComment
         }
     },
     created() {
