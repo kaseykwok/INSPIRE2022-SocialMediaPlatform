@@ -69,7 +69,7 @@ exports.getUserByUsername = (req, res) => {
 }
 
 exports.searchUserByKeyword = (req, res) => {
-    const keyword = req.body.keyword.toLowerCase()
+    const keyword = req.params.keyword.toLowerCase()
 
     Users.findAll({
         where: {

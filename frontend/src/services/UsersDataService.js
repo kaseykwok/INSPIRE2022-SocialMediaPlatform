@@ -8,6 +8,10 @@ class UsersDataService {
     return http.get(`/users/username/${username}`)
   }
 
+  searchAllUsersByKeyword(keyword) {
+    return http.get(`/users/search/user/${keyword}`)
+  }
+
   create(data) {
     return http.post("/users", data);
   }

@@ -11,7 +11,7 @@ module.exports = app => {
 
     router.get("/username/:username", users.getUserByUsername);
 
-    router.get("/search/user", users.searchUserByKeyword);
+    router.get("/search/user/:keyword", users.searchUserByKeyword);
   
     router.put("/:id", users.update);
   
