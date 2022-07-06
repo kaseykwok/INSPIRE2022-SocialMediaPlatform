@@ -1,3 +1,4 @@
+const { sequelize } = require("../models");
 const db = require("../models");
 const Users = db.users;
 const Op = db.Sequelize.Op;
@@ -56,6 +57,31 @@ exports.getUserByUsername = (req, res) => {
         username: req.params.username,
     }})
     .then(data => {
+        if(data) {
+            res.send(data)
+        } else {
+            res.status(404).send()
+        }
+    })
+    .catch(err => {
+        res.status(500).send()
+    })
+}
+
+exports.searchUserByKeyword = (req, res) => {
+    const keyword = req.body.keyword.toLowerCase()
+
+    Users.findAll({
+        where: {
+            [Op.or]: [
+                sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), 'LIKE', '%' + keyword + '%'),
+                sequelize.where(sequelize.fn('LOWER', sequelize.col('username')), 'LIKE', '%' + keyword + '%')
+            ]
+        },
+        attributes: {
+            exclude: ['password']
+        }
+    }).then(data => {
         if(data) {
             res.send(data)
         } else {
