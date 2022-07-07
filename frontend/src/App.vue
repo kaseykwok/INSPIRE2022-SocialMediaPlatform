@@ -6,13 +6,15 @@
     </div> -->
     <b-navbar type="dark" variant="dark" id="nav" :sticky="true">
       <b-navbar-brand href="/" class="my-1">#GirlsOnly</b-navbar-brand>
-      <b-navbar-nav class="my-1">
-        <b-nav-item href="/entrepreneurshipList" v-if="isLogin">Entrepreneurships</b-nav-item>
+      <b-navbar-nav class="my-1" v-if="isLogin">
+        <b-nav-item class="me-2" href="/entrepreneurshipList">Entrepreneurships</b-nav-item>
+        <b-nav-item class="me-2">Events</b-nav-item>
+        <b-nav-item class="me-2">Helping Hand</b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="ms-auto my-1" v-if="isLogin">
         <SearchBox class="my-1" />
         <span @click="onClickIcon" class="avatar">
-          <Avatar :username="$store.state.loginSession.name" :size="40" class="me-3"></Avatar>
+          <Avatar :username="$store.state.loginSession.username" :size="40" class="me-3"></Avatar>
         </span>
         <b-nav-item @click="logout">Log out</b-nav-item>
       </b-navbar-nav>

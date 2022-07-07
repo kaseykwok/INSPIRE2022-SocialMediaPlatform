@@ -11,7 +11,7 @@
             <b-card v-for="(user, key) in userMatch" :key="key" class="search-match"
                 @click="onClickProfile(user.username)">
                 <b-card-text>
-                    <Avatar :username="user.name" style="display: inline-block" class="me-3"></Avatar>
+                    <Avatar :username="user.username" style="display: inline-block" class="me-3"></Avatar>
                     <span class="username">
                         <span class="fw-bold fs-5">{{ user.name }}</span>
                         @{{user.username}}
@@ -25,7 +25,7 @@
 
         <b-card v-if="entrepreneurMatch.length > 0">
             <b-card-title class="mb-3">Entrepreneurships</b-card-title>
-            <b-card v-for="(entrepreneur, key) in entrepreneurMatch" :key="key" class="search-match"
+            <b-card v-for="(entrepreneur, key) in entrepreneurMatch" :key="key" class="search-match pb-2"
                 :img-src="entrepreneur.imageURL"
                 @click="onClickEntrepreneur(entrepreneur.id)">
                 <b-card-title>

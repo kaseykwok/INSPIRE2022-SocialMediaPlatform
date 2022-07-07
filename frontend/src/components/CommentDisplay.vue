@@ -1,6 +1,6 @@
 <template>
     <b-card>
-        <Avatar :username="userData.name" style="display: inline-block" :size="20" class="me-2"></Avatar>
+        <Avatar :username="userData.username" style="display: inline-block" :size="20" class="me-2"></Avatar>
         <span class="username" @click="onClickProfile">{{userData.name}}</span> : {{commentData.comment}}
     </b-card>
 </template>

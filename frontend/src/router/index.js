@@ -6,6 +6,7 @@ import Register from '../views/Register.vue'
 import Profile from '../views/Profile.vue'
 import Entrepreneurship from '../views/Entrepreneurship.vue'
 import EntrepreneurshipList from '../views/EntrepreneurshipList.vue'
+import NewEntrepreneurship from '../views/NewEntrepreneurship.vue'
 import SearchResult from '../views/SearchResult.vue'
 
 Vue.use(VueRouter)
@@ -48,6 +49,11 @@ const routes = [
     path: '/entrepreneurshipList',
     name: 'EntrepreneurshipList',
     component: EntrepreneurshipList
+  },
+  {
+    path: '/newEntrepreneurship',
+    name: 'NewEntrepreneurship',
+    component: NewEntrepreneurship
   },
   {
     path: '/searchResult',

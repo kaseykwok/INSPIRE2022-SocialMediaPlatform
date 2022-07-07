@@ -6,7 +6,7 @@
                 <b-card-text> 
                     <b-form @submit.prevent="onPost"> 
                         <b-textarea rows="5" max-rows="5" v-model="blogDescription"
-                            placeholder="Share you experience here!"
+                            placeholder="Share your experience here!"
                         ></b-textarea>
                         <b-button type="submit" class="mt-4" variant="primary" style="float:right">Post</b-button>
                     </b-form>

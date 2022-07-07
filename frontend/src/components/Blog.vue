@@ -5,7 +5,7 @@
                 <div>
                     <span style="float: right; color: #898989">{{blogData.createdAt}}</span>
                     <b-card-title> 
-                        <Avatar :username="userData.name" style="display: inline-block" class="me-3"></Avatar>
+                        <Avatar :username="userData.username" style="display: inline-block" class="me-3"></Avatar>
                         <span class="username" @click="onClickProfile">{{userData.name}} @{{ userData.username }} </span>
                     </b-card-title>
                     <b-card-text class="mt-4" style="white-space: pre-wrap">{{ blogData.description }}</b-card-text>
@@ -27,6 +27,7 @@
                     <b-form @submit.prevent="onComment">
                         <b-form-textarea max-rows="3" rows="3"
                             v-model="newComment"
+                            placeholder="Leave a comment."
                         ></b-form-textarea>
                         <div class="d-flex justify-content-end">
                             <b-button type="submit" class="my-2">Comment</b-button>

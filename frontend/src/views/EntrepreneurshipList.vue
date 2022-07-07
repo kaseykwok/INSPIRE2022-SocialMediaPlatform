@@ -3,6 +3,7 @@
         <div class="mb-5 mx-auto" style="max-width: 800px">
             <h2>Entrepreneurship</h2>
             <p>Do you want to share your start up ideas to others? Do you want to give other women help for their innovative ideas? Do you want to support women's business? Here is the place you're looking for!</p>
+            <b-button @click="onClickNew">Add New Entrepreneurship</b-button>
         </div>
         <EntrepreneurDisplay v-for="(entrepreneur, key) in entrepreneurs" :entrepreneurData="entrepreneur" :key="key"/>
     </div>
@@ -29,6 +30,10 @@ export default {
              }).catch( error => {
                 console.log("Error", error.response.data)
             })
+        },
+
+        onClickNew() {
+            this.$router.push({ path: '/newEntrepreneurship' })
         }
     },
     created() {

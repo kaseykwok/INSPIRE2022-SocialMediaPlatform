@@ -1,4 +1,4 @@
-import { required, regex } from 'vee-validate/dist/rules';
+import { required, regex, min_value } from 'vee-validate/dist/rules';
 import { extend } from 'vee-validate';
 
 extend('required', {
@@ -8,6 +8,10 @@ extend('required', {
 
 extend('regex', {
     ...regex,
+});
+
+extend('min_value', {
+    ...min_value,
 });
 
 extend('uniqueUsername', {

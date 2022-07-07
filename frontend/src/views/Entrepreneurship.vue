@@ -1,6 +1,22 @@
 <template>
     <div>
         <EntrepreneurDisplay :entrepreneurData="entrepreneur"/>
+        <b-card class="mb-5 mx-auto" style="max-width: 800px">
+            <b-form>
+                <b-form-group>
+                    <b-form-radio-group 
+                        class="mb-3 ms-3"
+                        :options="paymentOptions" 
+                        value-field="item"
+                        text-field="name"
+                        v-model="selectedPaymentMethod"
+                    >
+                    </b-form-radio-group>
+                </b-form-group>
+
+            </b-form>
+            <b-button style="width: 100%" variant="primary">Click here to link to external payment site.</b-button>
+        </b-card>
     </div>
 </template>
 
@@ -15,7 +31,13 @@ export default {
     },
     data() {
         return {
-            entrepreneur: {}
+            entrepreneur: {},
+            selectedPaymentMethod: null,
+            paymentOptions: [
+                { item: 'VISA', name: 'VISA' },
+                { item: 'Mastercard', name: 'Mastercard' },
+                { item: 'JCB', name: 'JCB' }
+            ]
         }
     },
     computed: {
